@@ -13,7 +13,7 @@
             <!-- Content -->
             <div class="card-body">
               <!-- Name -->
-              <h1 class="card-title h1-responsive font-weight-bold text-center">{{foundName}}</h1>
+              <h1 class="card-title h1-responsive font-weight-bold text-center" v-html="foundName"></h1>
             </div>
           </div>
           <div class="container">
@@ -58,8 +58,8 @@
           var profiles = [
               //FORMAT: Name, Profile image, RELATED PICTUES[Wordpress, Facebook, Twitter ...], 
               ["Felis Libero", "assets/Avatar (3).png", ["https://cdn3-www.dogtime.com/assets/uploads/2018/10/puppies-cover.jpg"]],  
-              ["Etiam Tristique", "assets/Avatar (9).png", ["https://www.vets4pets.com/siteassets/species/dog/puppy/puppy-running-playing.jpg22"]],
-              ["Integer Egestas", "assets/Avatar (8).png", ["https://cdn3-www.dogtime.com/assets/uploads/2018/10/puppies-cover.jpg", "https://www.vets4pets.com/siteassets/species/dog/puppy/puppy-running-playing.jpg"]], 
+              ["Etiam Tristique", "assets/Avatar (9).png", ["https://www.vets4pets.com/siteassets/species/dog/puppy/puppy-running-playing55.jpg"]],
+              ["Integer Egestas", "assets/Avatar (8).png", ["https://cdn3-www.dogtime.com/assets/uploads/2018/10/puppies-cover.jpg55", "https://www.vets4pets.com/siteassets/species/dog/puppy/puppy-running-playing.jpg55"]], 
             ];
           // Go through all images and check for the first one that can be loaded
           var i,j;
@@ -71,7 +71,7 @@
                     this.verifyImageURL(profiles[i][2][j], i, j, function (imageExists, i, j) {
                             if (imageExists === true) {
                                     var profileName = profiles[i][0];
-                                    that.foundName = "Hi, " + profileName + "! 👋";
+                                    that.foundName = "Hi, <b>" + profileName + "</b>! 👋";
                                     that.profileImage = profiles[i][1];
                                     var PICURL = profiles[i][2][j]; //URL
                                     if(j == 0)

@@ -13,7 +13,7 @@
             <!-- Content -->
             <div class="card-body">
               <!-- Name -->
-              <h1 class="card-title h1-responsive font-weight-bold text-center">{{foundName}}</h1>
+              <h1 class="card-title h1-responsive font-weight-bold text-center" v-html="foundName"></h1>
               <hr />
               <div class="text-muted text-center h4-responsive">
                 <p v-html="identifiedServices"></p>
@@ -60,8 +60,8 @@
           var profiles = [
               //FORMAT: Name, Profile image, RELATED PICTUES[Wordpress, Facebook, Twitter ...], 
               ["Integer Egestas", "assets/Avatar (8).png", ["https://cdn3-www.dogtime.com/assets/uploads/2018/10/puppies-cover.jpg", "https://www.vets4pets.com/siteassets/species/dog/puppy/puppy-running-playing.jpg","https://www.telegraph.co.uk/content/dam/Pets/spark/royal-canin/happy-puppy-xlarge.jpg?imwidth=1200"]], 
-              ["Felis Libero", "assets/Avatar (3).png", ["https://www.vets4pets.com/siteassets/species/dog/puppy/puppy-running-playing.jpg55"]],  
-              ["Etiam Tristique", "assets/Avatar (9).png", ["https://www.telegraph.co.uk/content/dam/Pets/spark/royal-canin/happy-puppy-xlarge.jpg55?imwidth=1200"]],
+              ["Felis Libero", "assets/Avatar (3).png", ["https://www.vets4pets.com/siteassets/species/dog/puppy/puppy-running-playing55.jpg"]],  
+              ["Etiam Tristique", "assets/Avatar (9).png", ["https://www.telegraph.co.uk/content/dam/Pets/spark/royal-canin/happy-puppy-xlarge.jpg"]],
               ["Lectus Ex", "assets/Avatar (4).png", ["https://www.petmd.com/sites/default/files/puppy-potty-training-388719256.jpg55"]],
               ["Leaky Attacker", "assets/Avatar (7).png", ["https://metro.co.uk/wp-content/uploads/2017/02/ad_2347111391.jpg55"]]
             ];
@@ -70,6 +70,7 @@
           // Go through all images and check for the first one that can be loaded
           var i,j;
           var imagestr = "You were indentified via ";
+          var profileName = "";
           var that = this;
           //Loop to go through all people
           for (i = 0; i < profiles.length; i++) {
@@ -77,8 +78,16 @@
                 for (j = 0; j < profiles[i][2].length; j++) {
                     this.verifyImageURL(profiles[i][2][j], i, j, function (imageExists, i, j) {
                             if (imageExists === true) {
-                                    var profileName = profiles[i][0];
-                                    that.foundName = "Hi, " + profileName + "! 👋";
+                                    if(!profileName.includes(profiles[i][0])){
+                                       if(profileName == ""){
+                                         profileName = profileName + " " + profiles[i][0];
+                                         that.foundName = "Hi, <b>" + profileName + "</b>! 👋";
+                                        }
+                                        else{
+                                         profileName = profileName + "; Or should we call you " + profiles[i][0];
+                                         that.foundName = "Hi, " + profileName + "? 😉"
+                                        }
+                                    }
                                     imagestr = imagestr + serviceIcons[j]
                                     that.identifiedServices = imagestr;
                                     that.profileImage = profiles[i][1];

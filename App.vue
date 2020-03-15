@@ -3,7 +3,8 @@
         <!--Navbar-->
     <mdb-navbar :color="'unique-color'" position="top" dark scrolling>
       <mdb-navbar-brand href="#">
-        <strong>Leaky Images</strong>
+        <img src="assets/leaky.png" height="30" alt="Leaky Images">
+        <strong> Images</strong>
       </mdb-navbar-brand>
       <mdb-navbar-toggler>
         <mdb-navbar-nav right>
