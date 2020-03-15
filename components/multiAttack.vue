@@ -1,0 +1,114 @@
+<template>
+  <div>
+    <!--ViewWrapper-->
+    <mdb-view>
+      <mdb-mask class="gradient d-flex justify-content-center align-items-center">
+        <mdb-container>
+          <!-- Card -->
+          <div class="card testimonial-card">
+            <div class="card-up indigo lighten-1"></div>
+            <div class="avatar mx-auto white">
+              <img :src="profileImage" class="rounded-circle mt-4" />
+            </div>
+            <!-- Content -->
+            <div class="card-body">
+              <!-- Name -->
+              <h1 class="card-title h1-responsive font-weight-bold text-center">{{foundName}}</h1>
+            </div>
+          </div>
+          <div class="container">
+            <div class="row">
+              <div class="col-6" v-html="attackIMG1"></div>
+              <div class="col-6" v-html="attackIMG2"></div>
+            </div>
+          </div>
+        </mdb-container>
+      </mdb-mask>
+    </mdb-view>
+  </div>
+</template>
+
+<script>
+
+  import { mdbContainer, mdbView, mdbMask } from 'mdbvue';
+  export default {
+    name: 'AppPage',
+    data: () => // Default values if no image found
+    ({ foundName: "We were not able to identify you 😢",
+       profileImage: "assets/Avatar (5).png",
+       attackIMG1: '<div class="card card-image"> <div class="text-white justify-content-center align-items-center d-flex special-color-dark py-5 px-4"><div><br><br><br><br><br><br><h3 class="card-title pt-2"><strong>Image 1 did not load</strong></h3><br><br><br><br><br><br></div></div></div>',
+       attackIMG2: '<div class="card card-image"> <div class="text-white justify-content-center align-items-center d-flex special-color-dark py-5 px-4"><div><br><br><br><br><br><br><h3 class="card-title pt-2"><strong>Image 2 did not load</strong></h3><br><br><br><br><br><br></div></div></div>' }),
+    components: {
+      mdbContainer,
+      mdbView,
+      mdbMask,
+    },
+    methods: {
+      verifyImageURL: function(url, i, j, callBack){
+        var img = new Image();
+        img.src = url;
+        img.onload = function () {
+              callBack(true, i, j);
+        };
+        img.onerror = function () {
+              callBack(false, i, j);
+        };
+      },
+      launchAttack: function() {
+          var profiles = [
+              //FORMAT: Name, Profile image, RELATED PICTUES[Wordpress, Facebook, Twitter ...], 
+              ["Felis Libero", "assets/Avatar (3).png", ["https://cdn3-www.dogtime.com/assets/uploads/2018/10/puppies-cover.jpg"]],  
+              ["Etiam Tristique", "assets/Avatar (9).png", ["https://www.vets4pets.com/siteassets/species/dog/puppy/puppy-running-playing.jpg22"]],
+              ["Integer Egestas", "assets/Avatar (8).png", ["https://cdn3-www.dogtime.com/assets/uploads/2018/10/puppies-cover.jpg", "https://www.vets4pets.com/siteassets/species/dog/puppy/puppy-running-playing.jpg"]], 
+            ];
+          // Go through all images and check for the first one that can be loaded
+          var i,j;
+          var that = this;
+          //Loop to go through all people
+          for (i = 0; i < profiles.length; i++) {
+            //Loop to go through all images for this person
+                for (j = 0; j < profiles[i][2].length; j++) {
+                    this.verifyImageURL(profiles[i][2][j], i, j, function (imageExists, i, j) {
+                            if (imageExists === true) {
+                                    var profileName = profiles[i][0];
+                                    that.foundName = "Hi, " + profileName + "! 👋";
+                                    that.profileImage = profiles[i][1];
+                                    var PICURL = profiles[i][2][j]; //URL
+                                    if(j == 0)
+                                      that.attackIMG1 = '<div class="card card-image" style="background-image: url(' + PICURL + '); background-repeat: no-repeat; background-size: cover"> <div class="text-white justify-content-center align-items-center d-flex rgba-stylish-light py-5 px-4"><div><br><br><br><br><br><br><h3 class="card-title pt-2"><strong>This image identified you</strong></h3><br><br><br><br><br><br></div></div></div>';
+                                    if(j == 1)
+                                      that.attackIMG2 = '<div class="card card-image" style="background-image: url(' + PICURL + '); background-repeat: no-repeat; background-size: cover"> <div class="text-white justify-content-center align-items-center d-flex rgba-stylish-light py-5 px-4"><div><br><br><br><br><br><br><h3 class="card-title pt-2"><strong>This image identified you</strong></h3><br><br><br><br><br><br></div></div></div>';
+                          } else {
+                                //Skip to next image
+                            }
+                        });
+                }
+          }
+        }
+    },
+    mounted() {
+     this.launchAttack();
+    }
+  }
+</script>
+
+<style>
+  .view {
+    background-image: url('https://mdbootstrap.com/img/Photos/Others/architecture.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center center;
+    height: calc(100vh);
+  }
+  .gradient {
+    background: -moz-linear-gradient(45deg, rgba(42, 27, 161, 0.7), rgba(29, 210, 177, 0.7) 100%);
+    background: -webkit-linear-gradient(45deg, rgba(42, 27, 161, 0.7), rgba(29, 210, 177, 0.7) 100%);
+    background: -webkit-gradient(linear, 45deg, from(rgba(42, 27, 161, 0.7)), to(rgba(29, 210, 177, 0.7)));
+    background: -o-linear-gradient(45deg, rgba(42, 27, 161, 0.7), rgba(29, 210, 177, 0.7) 100%);
+    background: linear-gradient(45deg, rgba(42, 27, 161, 0.7), rgba(29, 210, 177, 0.7) 100%);
+  }
+  h6 {
+      line-height: 1.7;
+  }
+</style>
+
