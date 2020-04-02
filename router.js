@@ -1,8 +1,9 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import singleAttack from './components/singleAttack.vue'
-import multiAttack from './components/multiAttack.vue'
-import htmlOnly from './components/htmlOnly.vue'
+import multiAttackWP from './components/multiAttackWP.vue'
+import multiAttackOD from './components/multiAttackOD.vue'
+import multiService from './components/multiService.vue'
 import how from './components/how.vue'
 
 
@@ -16,14 +17,19 @@ export default new Router({
       component: singleAttack
     },
     {
-      path: '/multiAttack',
-      name: 'multiAttack',
-      component: multiAttack
+      path: '/multiAttackWP',
+      name: 'multiAttackWP',
+      component: multiAttackWP
     },
     {
-      path: '/htmlOnly',
-      name: 'htmlOnly',
-      component: htmlOnly
+      path: '/multiAttackOD',
+      name: 'multiAttackOD',
+      component: multiAttackOD
+    },
+    {
+      path: '/multiService',
+      name: 'multiService',
+      component: multiService
     },
     {
       path: '/how',

@@ -6,7 +6,7 @@
         <mdb-container>
           <div class="card">
             <div class="card-body aqua-gradient color-block font-weight-bold text-center text-white">
-              This attack identifies a single user on one or more services.
+              This attack can identify a user on multiple platforms and even detect different identities belonging to the same user.
             </div>
           </div>
           <div class="card testimonial-card">
@@ -62,14 +62,16 @@
       },
       launchAttack: function() {
           var profiles = [
-              //FORMAT: Name, Profile image, RELATED PICTUES[Wordpress, Facebook, Twitter ...], 
+              //FORMAT: Name, Profile image, RELATED PICTUES[Wordpress, Facebook, Twitter ...],                                               
               ["Lectus Ex", "assets/Avatar (7).png", ["https://leakyblog1.files.wordpress.com/2020/03/gettyimages-157531381-1024x746-1.jpg", "https://x0lmrq.by.files.1drv.com/y4pr192HuNrOkU5uBZ8KttkuIMzpNYOhm5FZL0wbjbbw02aAwv4o2B8QgvKD52D4R4MKRbdYmMjRfoOopATOdggrkWNa6NQGLceTXKxNEd3Ae28FBhE1pwibJQ5sgkZgcGVtdkJgKgV1cGtEJqod2TY5LsHUPHejt0pdg57xYdLhNrmuqh0f5xGW-eyXFBX1FPfPHvrUQSFhlxTsO0gutZFCd6yr9l3ZtgqSac7qJbCq_s/GettyImages-157531381-1024x746.jpg?psid=1"]],
-              ["Magna Tortor", "assets/Avatar (3).png", ["https://leakyblog0.files.wordpress.com/2020/03/gettyimages-157531381-1024x746-1.jpg ", "https://yrenua.by.files.1drv.com/y4piraBylZ08NqRWN-ZcQ_YaaOA03NxiKrybfc46e-S5oPNFMyy2lCl-3heHxXXMJm347bHc6FUgF8E0-IqEWe3ytEa2nwXsnzMrIBs_Ytb4P_Q11OQs5ju_7-VEEcm_gQSGhKAfEajGnvks8zhpkvk0wHgV2V5jAudiI5z0PrdmdEZ7a39grWVPI4HE_O9zbFOgZRwQV0hVv6xbVIzBINW7p-Nl23OWQVmdeliRF_wqJM/de%20pantalla%20el%20perro%20hermoso%20boo%20hd%20widescreen%20Gratis%20imagenes%209985.jpg?psid=1"]]];
-
+              ["Magna Tortor", "assets/Avatar (3).png", ["https://leakyblog0.files.wordpress.com/2020/03/gettyimages-157531381-1024x746-1.jpg", "https://yrenua.by.files.1drv.com/y4piraBylZ08NqRWN-ZcQ_YaaOA03NxiKrybfc46e-S5oPNFMyy2lCl-3heHxXXMJm347bHc6FUgF8E0-IqEWe3ytEa2nwXsnzMrIBs_Ytb4P_Q11OQs5ju_7-VEEcm_gQSGhKAfEajGnvks8zhpkvk0wHgV2V5jAudiI5z0PrdmdEZ7a39grWVPI4HE_O9zbFOgZRwQV0hVv6xbVIzBINW7p-Nl23OWQVmdeliRF_wqJM/de%20pantalla%20el%20perro%20hermoso%20boo%20hd%20widescreen%20Gratis%20imagenes%209985.jpg?psid=1"]]];
+                        
           //Items in order [Wordpress, OneDrive, Facebook ...] 
           var serviceIcons = ['<a class="px-2 fa-lg li-ic"><i class="fab fa-wordpress"></i></a>', '<a class="px-2 fa-lg tw-ic"><i class="fab fa-microsoft"></i></a>', '<a class="px-2 fa-lg fb-ic"><i class="fab fa-facebook-f"></i></a>'];
           // Go through all images and check for the first one that can be loaded
           var i,j;
+          var imagestr = "You were identified via ";
+          var profileName = "";
           var that = this;
           //Loop to go through all people
           for (i = 0; i < profiles.length; i++) {
@@ -77,8 +79,18 @@
                 for (j = 0; j < profiles[i][2].length; j++) {
                     this.verifyImageURL(profiles[i][2][j], i, j, function (imageExists, i, j) {
                             if (imageExists === true) {
-                                    that.foundName = "Hi, <b>" + profiles[i][0] + "</b>! 👋";
-                                    that.identifiedServices = "You were identified via " + serviceIcons[j];
+                                    if(!profileName.includes(profiles[i][0])){
+                                       if(profileName == ""){
+                                         profileName = profiles[i][0];
+                                         that.foundName = "Hi, <b>" + profileName + "</b>! 👋";
+                                        }
+                                        else{
+                                         profileName = profileName + "; Or should we call you " + profiles[i][0];
+                                         that.foundName = "Hi, " + profileName + "? 😉"
+                                        }
+                                    }
+                                    imagestr = imagestr + serviceIcons[j] + "(" + profiles[i][0] + ")";
+                                    that.identifiedServices = imagestr;
                                     that.profileImage = profiles[i][1];
                                     var PICURL = profiles[i][2][j]; //URL
                                     that.attackIMG = '<div class="card card-image" style="background-image: url(' + PICURL + '); background-repeat: no-repeat; background-size: cover"> <div class="text-white justify-content-center align-items-center d-flex rgba-stylish-light py-5 px-4"><div><br><br><br><br><br><br><h3 class="card-title pt-2"><strong>This image identified you</strong></h3><br><br><br><br><br><br></div></div></div>';
